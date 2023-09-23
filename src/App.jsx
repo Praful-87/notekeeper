@@ -62,21 +62,34 @@ function App() {
 
         <Flex
           direction={"column"}
-          gap="2"
           rounded="md"
           pos={"absolute"}
           top="calc(100% + 10px)"
-          p="4"
+          py="5"
           boxShadow="dark-lg"
           w="400px"
           bg={"white"}
-          display={show ? "absolute" : "none"}
+          gap="2"
         >
-          <Input variant="unstyled" placeholder="Title" />
+          <Input
+            px="4"
+            _placeholder={{
+              fontSize: "14px",
+            }}
+            variant={"unstyled"}
+            placeholder="Title"
+          />
           <Divider />
-          <Input variant="unstyled" placeholder="Description" />
+          <Input
+            _placeholder={{
+              fontSize: "14px",
+            }}
+            px="4"
+            variant={"unstyled"}
+            placeholder="Description"
+          />
           <Divider />
-          <Flex justify={"end"}>
+          <Flex px="4" justify={"end"}>
             <IconButton
               size="sm"
               variant="outline"
