@@ -39,7 +39,7 @@ function App() {
       <HStack p="4">
         <Flex align="center">
           <Image src="https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png" />
-          <Text>NoteKeeper</Text>
+          <Text>Note Keeper</Text>
         </Flex>
         <InputGroup maxW="500px" ml={["20px", "40px", "300px"]}>
           <InputLeftElement pointerEvents="none">
@@ -113,11 +113,27 @@ function App() {
           </Flex>
         </Box>
       </Center>
-      <SimpleGrid maxW="1000px" m={"auto"} mt="5" gap="4" columns={AuthenticatorAttestationResponse}>
-        {data.length > 0 &&
+      <SimpleGrid
+        transition={"0.4s"}
+        maxW="1200px"
+        m={"auto"}
+        mt="10"
+        gap="6"
+        columns={[2, 3, 4]}
+      >
+        {/* {data.length > 0 &&
           data.map((note, id) => {
             return <Note key={id} note={note} />;
-          })}
+          })} */}
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
       </SimpleGrid>
     </>
   );
