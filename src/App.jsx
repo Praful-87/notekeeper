@@ -18,18 +18,13 @@ import {
 import Note from "./components/Note";
 import { SearchIcon, AddIcon } from "@chakra-ui/icons";
 function App() {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
+  const [data, setData] = useState([]);
   const boxRef = useRef(null);
-
-  function handelClickOutside(e) {
-    if (!boxRef.current.contains(e.target)) console.log("click outside");
-    else console.log("cliked inside");
+  console.log(show);
+  function handelAddNote() {
+    setShow(false);
   }
-  useEffect(() => {
-    return () => {
-      document.removeEventListener("click", handelClickOutside);
-    };
-  }, []);
   return (
     <>
       <HStack p="4">
@@ -45,8 +40,9 @@ function App() {
         </InputGroup>
       </HStack>
       <Divider />
-      <Center pos="relative" ref={boxRef} onClick={handelClickOutside}>
+      <Center pos="relative">
         <Center
+          onClick={() => setShow(true)}
           mt="4"
           rounded="md"
           w="400px"
@@ -58,9 +54,10 @@ function App() {
           Add Note
         </Center>
 
-        {/* showable box */}
+        {/*  modal */}
 
         <Flex
+          ref={boxRef}
           direction={"column"}
           rounded="md"
           pos={"absolute"}
@@ -70,6 +67,7 @@ function App() {
           w="400px"
           bg={"white"}
           gap="2"
+          display={show ? "absolute" : "none"}
         >
           <Input
             px="4"
@@ -89,8 +87,9 @@ function App() {
             placeholder="Description"
           />
           <Divider />
-          <Flex px="4" justify={"end"}>
+          <Flex align="center" px="4" justify={"end"}>
             <IconButton
+              onClick={handelAddNote}
               size="sm"
               variant="outline"
               colorScheme="black"
