@@ -1,13 +1,23 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
-import React from "react";
+import { Box, Divider, Heading, Text } from "@chakra-ui/react";
+import React, { memo } from "react";
 
-const Note = () => {
+const Note = ({ note }) => {
   return (
-    <Box>
-      <Heading>Title</Heading>
-      <Text>Description</Text>
+    <Box
+      w="250px"
+      h="150px"
+      border="1px"
+      borderColor={"gray.300"}
+      rounded="md"
+      py="2"
+    >
+      <Heading mt="4" mx="2" size="sm">
+        {note.title}
+      </Heading>
+      <Divider my="4" />
+      <Text mx="2"> {note.desc}</Text>
     </Box>
   );
 };
 
-export default Note;
+export default memo(Note);

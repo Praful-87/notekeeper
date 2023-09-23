@@ -20,10 +20,19 @@ import { SearchIcon, AddIcon } from "@chakra-ui/icons";
 function App() {
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
+  const Title = useRef(null);
+  const Desc = useRef(null);
   const boxRef = useRef(null);
-  console.log(show);
+  console.table(data);
   function handelAddNote() {
     setShow(false);
+    let newNote = {
+      title: Title.current.value,
+      desc: Desc.current.value,
+    };
+    setData([...data, newNote]);
+    Title.current.value = "";
+    Desc.current.value = "";
   }
   return (
     <>
@@ -56,9 +65,8 @@ function App() {
 
         {/*  modal */}
 
-        <Flex
+        <Box
           ref={boxRef}
-          direction={"column"}
           rounded="md"
           pos={"absolute"}
           top="calc(100% + 10px)"
@@ -66,10 +74,12 @@ function App() {
           boxShadow="dark-lg"
           w="400px"
           bg={"white"}
-          gap="2"
           display={show ? "absolute" : "none"}
         >
           <Input
+            fontSize={"12px"}
+            my="1"
+            ref={Title}
             px="4"
             _placeholder={{
               fontSize: "14px",
@@ -77,8 +87,11 @@ function App() {
             variant={"unstyled"}
             placeholder="Title"
           />
-          <Divider />
+          <Divider my="1" />
           <Input
+            fontSize={"12px"}
+            my="1"
+            ref={Desc}
             _placeholder={{
               fontSize: "14px",
             }}
@@ -86,8 +99,8 @@ function App() {
             variant={"unstyled"}
             placeholder="Description"
           />
-          <Divider />
-          <Flex align="center" px="4" justify={"end"}>
+          <Divider my="1" />
+          <Flex align="center" px="4" my="1" justify={"end"}>
             <IconButton
               onClick={handelAddNote}
               size="sm"
@@ -98,12 +111,13 @@ function App() {
               rounded="3px"
             />
           </Flex>
-        </Flex>
+        </Box>
       </Center>
-      <SimpleGrid border="1px" maxW="1200px" m={"auto"} mt="5">
-        <GridItem>
-          <Note />
-        </GridItem>
+      <SimpleGrid maxW="1000px" m={"auto"} mt="5" gap="4" columns={AuthenticatorAttestationResponse}>
+        {data.length > 0 &&
+          data.map((note, id) => {
+            return <Note key={id} note={note} />;
+          })}
       </SimpleGrid>
     </>
   );
