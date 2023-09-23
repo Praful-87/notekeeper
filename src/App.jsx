@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import {
   Divider,
@@ -13,10 +13,23 @@ import {
   Text,
   Flex,
   Center,
+  IconButton,
 } from "@chakra-ui/react";
 import Note from "./components/Note";
-import { SearchIcon } from "@chakra-ui/icons";
+import { SearchIcon, AddIcon } from "@chakra-ui/icons";
 function App() {
+  const [show, setShow] = useState(true);
+  const boxRef = useRef(null);
+
+  function handelClickOutside(e) {
+    if (!boxRef.current.contains(e.target)) console.log("click outside");
+    else console.log("cliked inside");
+  }
+  useEffect(() => {
+    return () => {
+      document.removeEventListener("click", handelClickOutside);
+    };
+  }, []);
   return (
     <>
       <HStack p="4">
@@ -32,7 +45,7 @@ function App() {
         </InputGroup>
       </HStack>
       <Divider />
-      <Center pos="relative">
+      <Center pos="relative" ref={boxRef} onClick={handelClickOutside}>
         <Center
           mt="4"
           rounded="md"
@@ -44,12 +57,38 @@ function App() {
         >
           Add Note
         </Center>
-        <Box pos={"absolute"} top="calc(100% + 10px)" shadow={"xl"} p="4">
+
+        {/* showable box */}
+
+        <Flex
+          direction={"column"}
+          gap="2"
+          rounded="md"
+          pos={"absolute"}
+          top="calc(100% + 10px)"
+          p="4"
+          boxShadow="dark-lg"
+          w="400px"
+          bg={"white"}
+          display={show ? "absolute" : "none"}
+        >
           <Input variant="unstyled" placeholder="Title" />
-          <Input variant="unstyled" placeholder="Title" mt="4" />
-        </Box>
+          <Divider />
+          <Input variant="unstyled" placeholder="Description" />
+          <Divider />
+          <Flex justify={"end"}>
+            <IconButton
+              size="sm"
+              variant="outline"
+              colorScheme="black"
+              aria-label="Send email"
+              icon={<AddIcon />}
+              rounded="3px"
+            />
+          </Flex>
+        </Flex>
       </Center>
-      <SimpleGrid>
+      <SimpleGrid border="1px" maxW="1200px" m={"auto"} mt="5">
         <GridItem>
           <Note />
         </GridItem>
